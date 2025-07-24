@@ -124,7 +124,7 @@ $timezones = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>treehouse</title>
+    <title>nest</title>
     <style>
         * {
             margin: 0;
@@ -393,7 +393,7 @@ $timezones = [
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 12px;
+            font-size: 14px;
             color: #666;
         }
         
@@ -439,7 +439,7 @@ $timezones = [
 <body>
     <div class="header">
         <div class="logo">
-            b-mozz/<br>
+            <a href="https://github.com/b-mozz" target="_blank" style="color: inherit; text-decoration: none;">b-mozz</a>/<br>
             dashboard
         </div>
         <div class="header-controls">
@@ -486,7 +486,7 @@ $timezones = [
         <!-- News/Inbox Card -->
         <div class="card">
             <div class="card-header">
-                <div class="card-title">inbox</div>
+                <div class="card-title">news</div>
                 <div class="card-subtitle">latest</div>
             </div>
             <div class="card-content">
@@ -591,14 +591,10 @@ $timezones = [
         </div>
     </div>
     
-    <div class="footer">
-        <div>@<?php echo $_SERVER['SERVER_NAME'] ?? 'localhost'; ?></div>
-        <div class="footer-icons">
-            <span>☁</span>
-            <span>⚡</span>
-            <span>◆</span>
-        </div>
-        <div>v<?php echo date('ymd'); ?></div>
+    <div class="footer-icons">
+        <a href="https://github.com/b-mozz" target="_blank" style="color: #666; text-decoration: none; font-family: monospace;" title="GitHub">
+            <span>Link to My GitHub</span>
+        </a>
     </div>
     
     <script>
