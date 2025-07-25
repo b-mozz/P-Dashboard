@@ -1,12 +1,16 @@
+
 <?php
-// Personal Dashboard - Single File
+// Treehouse-Style Personal Dashboard
 // Load configuration from separate file
-$config = include 'config.php';
-$WEATHER_API_KEY = $config['weather_api_key'];
-$NEWS_API_KEY = $config['news_api_key'];
-$CITY = $config['city'];
-
-
+if (file_exists('config.php')) {
+    $config = include 'config.php';
+    $NEWS_API_KEY = $config['news_api_key'] ?? '';
+    $CITY = $config['city'] ?? 'New York';
+} else {
+    // Fallback if config.php doesn't exist
+    $NEWS_API_KEY = 'Place holder for API key'; //if external tester is testing it without the config.php file
+    $CITY = 'New York';
+}
 
 // Enhanced function to make API calls with fallbacks
 function fetchAPI($url, $useBackup = true) {
@@ -41,25 +45,6 @@ function fetchAPI($url, $useBackup = true) {
     }
     
     return $response ? json_decode($response, true) : null;
-}
-
-function getWeather($city, $apiKey) {
-    if (empty($apiKey) || $apiKey === 'PUT_YOUR_OPENWEATHER_API_KEY_HERE') {
-        return null;
-    }
-    
-    $urls = [
-        "http://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$apiKey}&units=metric",
-        "https://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$apiKey}&units=metric"
-    ];
-    
-    foreach ($urls as $url) {
-        $result = fetchAPI($url);
-        if ($result && isset($result['main'])) {
-            return $result;
-        }
-    }
-    return null;
 }
 
 function getNews($apiKey) {
@@ -105,7 +90,6 @@ function getCrypto() {
 }
 
 // Fetch all data
-$weather = getWeather($CITY, $WEATHER_API_KEY);
 $news = getNews($NEWS_API_KEY);
 $quote = getQuote();
 $crypto = getCrypto();
@@ -124,7 +108,7 @@ $timezones = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nest</title>
+    <title>উজবুক</title>
     <style>
         * {
             margin: 0;
@@ -263,20 +247,34 @@ $timezones = [
             padding: 15px;
         }
         
-        .weather-display {
-            text-align: center;
-            padding: 20px 0;
+        .link-item {
+            padding: 6px 0;
+            border-bottom: 1px solid #222;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .weather-temp {
-            font-size: 48px;
-            font-weight: 300;
-            margin-bottom: 10px;
+        .link-item:last-child {
+            border-bottom: none;
         }
         
-        .weather-desc {
+        .link-arrow {
+            color: #666;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        
+        .link-url {
+            color: inherit;
+            text-decoration: none;
+            flex: 1;
+            transition: color 0.2s ease;
+            font-size: 12px;
+        }
+        
+        .link-url:hover {
             color: #999;
-            margin-bottom: 5px;
         }
         
         .news-item {
@@ -393,13 +391,8 @@ $timezones = [
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
+            font-size: 12px;
             color: #666;
-        }
-        
-        .footer-icons {
-            display: flex;
-            gap: 15px;
         }
         
         .setup-notice {
@@ -439,7 +432,7 @@ $timezones = [
 <body>
     <div class="header">
         <div class="logo">
-            <a href="https://github.com/b-mozz" target="_blank" style="color: inherit; text-decoration: none;">b-mozz</a>/<br>
+            b-mozz/<br>
             dashboard
         </div>
         <div class="header-controls">
@@ -461,32 +454,44 @@ $timezones = [
     </div>
     
     <div class="dashboard">
-        <!-- Weather Card -->
+        <!-- Quick Links Card -->
         <div class="card">
             <div class="card-header">
-                <div class="card-title">weather</div>
-                <div class="card-subtitle"><?php echo strtolower($CITY); ?></div>
+                <div class="card-title">links</div>
+                <div class="card-subtitle">quick</div>
             </div>
             <div class="card-content">
-                <?php if ($weather && isset($weather['main'])): ?>
-                    <div class="weather-display">
-                        <div class="weather-temp"><?php echo round($weather['main']['temp']); ?>°</div>
-                        <div class="weather-desc"><?php echo strtolower($weather['weather'][0]['description']); ?></div>
-                        <div class="weather-desc">feels like <?php echo round($weather['main']['feels_like']); ?>°</div>
-                    </div>
-                <?php else: ?>
-                    <div class="setup-notice">
-                        api key required<br>
-                        <a href="https://openweathermap.org/api" target="_blank">get weather api key</a>
-                    </div>
-                <?php endif; ?>
+                <div class="link-item">
+                    <div class="link-arrow">→</div>
+                    <a href="https://github.com" target="_blank" class="link-url">github</a>
+                </div>
+                <div class="link-item">
+                    <div class="link-arrow">→</div>
+                    <a href="https://gmail.com" target="_blank" class="link-url">gmail</a>
+                </div>
+                <div class="link-item">
+                    <div class="link-arrow">→</div>
+                    <a href="https://youtube.com" target="_blank" class="link-url">youtube</a>
+                </div>
+                <div class="link-item">
+                    <div class="link-arrow">→</div>
+                    <a href="https://netflix.com" target="_blank" class="link-url">netflix</a>
+                </div>
+                <div class="link-item">
+                    <div class="link-arrow">→</div>
+                    <a href="https://twitter.com" target="_blank" class="link-url">twitter</a>
+                </div>
+                <div class="link-item">
+                    <div class="link-arrow">→</div>
+                    <a href="https://reddit.com" target="_blank" class="link-url">reddit</a>
+                </div>
             </div>
         </div>
         
         <!-- News/Inbox Card -->
         <div class="card">
             <div class="card-header">
-                <div class="card-title">news</div>
+                <div class="card-title">inbox</div>
                 <div class="card-subtitle">latest</div>
             </div>
             <div class="card-content">
@@ -572,8 +577,8 @@ $timezones = [
             </div>
             <div class="card-content">
                 <div class="todo-item">
-                    <input type="checkbox" class="checkbox" <?php echo $weather ? 'checked' : ''; ?>>
-                    <span>weather api</span>
+                    <input type="checkbox" class="checkbox" checked>
+                    <span>quick links</span>
                 </div>
                 <div class="todo-item">
                     <input type="checkbox" class="checkbox" <?php echo $news ? 'checked' : ''; ?>>
@@ -591,10 +596,13 @@ $timezones = [
         </div>
     </div>
     
-    <div class="footer-icons">
-        <a href="https://github.com/b-mozz" target="_blank" style="color: #666; text-decoration: none; font-family: monospace;" title="GitHub">
+    <div class="footer">
+        <div>@<?php echo $_SERVER['SERVER_NAME'] ?? 'localhost'; ?></div>
+        <div>
+            <a href="https://github.com/b-mozz" target="_blank" style="color: #666; text-decoration: none; font-family: monospace;" title="GitHub">
             <span>Link to My GitHub</span>
-        </a>
+        </div>
+        <div>v<?php echo date('ymd'); ?></div>
     </div>
     
     <script>
@@ -620,6 +628,28 @@ $timezones = [
                 document.getElementById('searchInput').focus();
             }
         });
+        
+        // Auto-refresh every 15 minutes with countdown
+        let refreshInterval = 15 * 60; // 15 minutes in seconds
+        let currentTime = refreshInterval;
+        
+        function updateCountdown() {
+            const minutes = Math.floor(currentTime / 60);
+            const seconds = currentTime % 60;
+            
+            // Update the version number area with countdown
+            const versionElement = document.querySelector('.footer').lastElementChild;
+            if (currentTime > 0) {
+                versionElement.innerHTML = `v<?php echo date('ymd'); ?> • refresh in ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                currentTime--;
+            } else {
+                versionElement.innerHTML = 'refreshing...';
+                setTimeout(() => window.location.reload(), 1000);
+            }
+        }
+        
+        // Start countdown
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
