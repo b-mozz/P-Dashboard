@@ -27,23 +27,23 @@ A minimal, single-file personal dashboard built with PHP and JavaScript. This pr
 
   
 
-- **📰 Latest News**: Real-time news headlines with clickable links
+- **Latest News**: Real-time news headlines with clickable links
 
-- **💭 Daily Inspiration**: Random motivational quotes with fallback sources
+- **Daily Inspiration**: Random motivational quotes with fallback sources
 
-- **💰 Crypto Prices**: Live cryptocurrency market data (Bitcoin, Ethereum, Dogecoin)
+- **Crypto Prices**: Live cryptocurrency market data (Bitcoin, Ethereum, Dogecoin)
 
-- **🔗 Quick Links**: Fast access to frequently used websites
+- **Quick Links**: Fast access to frequently used websites
 
-- **🕐 Multi-Timezone Clock**: Current time with multiple timezone display
+- **Multi-Timezone Clock**: Current time with multiple timezone display
 
-- **🔍 Google Search**: Integrated search functionality
+- **Google Search**: Integrated search functionality
 
-- **📊 System Status**: Real-time API health monitoring
+- **System Status**: Real-time API health monitoring
 
-- **🔄 Auto-Refresh**: Automatic data updates every 15 minutes with countdown
+- **Auto-Refresh**: Automatic data updates every 15 minutes with countdown
 
-- **📱 Responsive Design**: Works seamlessly on desktop and mobile
+- **Responsive Design**: Works seamlessly on desktop and mobile
 
   
 
